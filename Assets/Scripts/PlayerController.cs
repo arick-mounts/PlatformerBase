@@ -50,6 +50,14 @@ public partial class @PlayerController : IInputActionCollection2, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""2bd58a81-a044-4013-b2fd-ea2b7b997b42"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -151,6 +159,17 @@ public partial class @PlayerController : IInputActionCollection2, IDisposable
                     ""action"": ""RSMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fe0c7f1e-8cb9-4cc2-abb1-22f7e4c4a2fb"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -162,6 +181,7 @@ public partial class @PlayerController : IInputActionCollection2, IDisposable
         m_Movement_LSMove = m_Movement.FindAction("LSMove", throwIfNotFound: true);
         m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
         m_Movement_RSMove = m_Movement.FindAction("RSMove", throwIfNotFound: true);
+        m_Movement_Newaction = m_Movement.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -224,6 +244,7 @@ public partial class @PlayerController : IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_LSMove;
     private readonly InputAction m_Movement_Jump;
     private readonly InputAction m_Movement_RSMove;
+    private readonly InputAction m_Movement_Newaction;
     public struct MovementActions
     {
         private @PlayerController m_Wrapper;
@@ -231,6 +252,7 @@ public partial class @PlayerController : IInputActionCollection2, IDisposable
         public InputAction @LSMove => m_Wrapper.m_Movement_LSMove;
         public InputAction @Jump => m_Wrapper.m_Movement_Jump;
         public InputAction @RSMove => m_Wrapper.m_Movement_RSMove;
+        public InputAction @Newaction => m_Wrapper.m_Movement_Newaction;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -249,6 +271,9 @@ public partial class @PlayerController : IInputActionCollection2, IDisposable
                 @RSMove.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnRSMove;
                 @RSMove.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnRSMove;
                 @RSMove.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnRSMove;
+                @Newaction.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnNewaction;
+                @Newaction.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnNewaction;
+                @Newaction.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnNewaction;
             }
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -262,6 +287,9 @@ public partial class @PlayerController : IInputActionCollection2, IDisposable
                 @RSMove.started += instance.OnRSMove;
                 @RSMove.performed += instance.OnRSMove;
                 @RSMove.canceled += instance.OnRSMove;
+                @Newaction.started += instance.OnNewaction;
+                @Newaction.performed += instance.OnNewaction;
+                @Newaction.canceled += instance.OnNewaction;
             }
         }
     }
@@ -271,5 +299,6 @@ public partial class @PlayerController : IInputActionCollection2, IDisposable
         void OnLSMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRSMove(InputAction.CallbackContext context);
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

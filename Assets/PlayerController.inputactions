@@ -28,6 +28,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "2bd58a81-a044-4013-b2fd-ea2b7b997b42",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -127,6 +135,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "RSMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fe0c7f1e-8cb9-4cc2-abb1-22f7e4c4a2fb",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
