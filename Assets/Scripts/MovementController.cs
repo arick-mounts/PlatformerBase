@@ -43,8 +43,6 @@ public class MovementController : MonoBehaviour
     private float groundAngle;  
     private float sphereCastWidth;
 
-    private bool onPlatform = false;
-    private Rigidbody platformRB;
 
     private float angle = 0.0f;
 
@@ -132,9 +130,7 @@ public class MovementController : MonoBehaviour
         float sm = accel * accelerationCurve.Evaluate((Time.time - accelerationStartTime) / accelSmoothTime ); // Mathf.SmoothStep(0.5f, accel, (Time.time - accelerationStartTime) / accelSmoothTime);
                                                                                                                //Debug.Log(sm + " - " + accelerationCurve.Evaluate((Time.time - accelerationStartTime) / accelSmoothTime));
 
-        //if (onPlatform)
-        //    rb.velocity += Vector3.Project(platformRB.velocity, rb.velocity);
-
+        
         if (rb.velocity.magnitude < maxSpeed && inputDirection.magnitude >= .15 && groundAngle <= maxGroundAngle)
         {
 
@@ -199,7 +195,14 @@ public class MovementController : MonoBehaviour
 
     void toggleGravity()
     {
-        rb.useGravity = !onGround;
+        if (!onGround || groundAngle >= maxGroundAngle)
+        {
+            rb.useGravity = true;
+        }
+        else
+        {
+            rb.useGravity = false;
+        }
     }
 
     //returns whether the player is on the ground or not.
@@ -244,24 +247,6 @@ public class MovementController : MonoBehaviour
         controls.Movement.Disable();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Platform")
-        {
-            onPlatform = true;
-            platformRB = other.GetComponent<Rigidbody>();
-            rb.velocity += platformRB.velocity;
-        } 
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Platform")
-        {
-            onPlatform = false;
-            platformRB = null;
-        }
-    }
 
 
 }
