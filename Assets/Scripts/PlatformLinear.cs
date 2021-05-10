@@ -69,13 +69,15 @@ public class PlatformLinear : MonoBehaviour
         Vector3 heading = currentTarget - transform.position;
 
         transform.position += heading.normalized * speed *  speedCurve.Evaluate(getPercentageAlong(currentTarget, previousPoint, transform.position)) * Time.deltaTime;
+        currentVelocity = (transform.position - previousPosition) / Time.deltaTime;
+
         if (heading.magnitude <= tolerance)
         {
             transform.position = currentTarget;
             atTarget = true;
             delay_start = Time.time;
+            currentVelocity = Vector3.zero;
         }
-        currentVelocity = (transform.position - previousPosition) / Time.deltaTime;
     }
 
     void updateTarget()
