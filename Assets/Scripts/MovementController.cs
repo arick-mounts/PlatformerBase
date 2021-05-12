@@ -13,6 +13,7 @@ public class MovementController : MonoBehaviour
     public float accelSmoothTime = 0.5f;
     public float maxSpeed = 14.0f;
     public float airMoveMod = 0.85f;
+    public float minSpeed = 0.2f;
 
     public float jumpSpeed = 8.0F;
     public float jumpSmoothTime = 1.0f;
@@ -23,7 +24,8 @@ public class MovementController : MonoBehaviour
     public float deccelerationSmoothTime = 4;
 
     public float maxGroundAngle = 120;
-    public float groundDistPad = 0.1f;
+    public float groundDistPad = -0.2f;
+
 
     public AnimationCurve accelerationCurve;
     public AnimationCurve decelerationCurve;
@@ -31,7 +33,7 @@ public class MovementController : MonoBehaviour
 
 
 
-
+    private PlayerAnimationController animCon;
 
     private bool onGround = true;
     private float distToGround;
@@ -63,6 +65,7 @@ public class MovementController : MonoBehaviour
         //intializes variables
         controls = new PlayerController();
         rb = GetComponent<Rigidbody>();
+        animCon = GetComponent<PlayerAnimationController>();
 
         //gets dist to bottom of collider
         distToGround = GetComponent<Collider>().bounds.extents.y;
@@ -82,6 +85,15 @@ public class MovementController : MonoBehaviour
 
     void Update()
     {
+        passAnimationData();
+    }
+
+    void passAnimationData()
+    {
+        Vector3 perp = Vector3.Cross(rb.velocity.normalized, forwardDir.normalized);
+        if(Vector3.Dot(perp, Vector3.up) != 0 &&  Vector3.Dot(rb.velocity.normalized, forwardDir.normalized) != 0)
+            animCon.setDirectionAnim(Vector3.Dot(perp, Vector3.up),  Vector3.Dot(rb.velocity.normalized, forwardDir.normalized));
+        animCon.setVelocityAnim(rb.velocity.magnitude);
     }
 
     private void FixedUpdate()
@@ -101,7 +113,7 @@ public class MovementController : MonoBehaviour
 
 
                
-
+        
         //accelerates when below max spee
         if (inputDirection.magnitude >= .01) {
 
@@ -109,10 +121,10 @@ public class MovementController : MonoBehaviour
             move();
 
         }
-        else
-        {
-            decelerate();
-        }
+        
+        
+        
+
 
     }
 
@@ -129,7 +141,7 @@ public class MovementController : MonoBehaviour
 
         float sm = accel * accelerationCurve.Evaluate((Time.time - accelerationStartTime) / accelSmoothTime ); // Mathf.SmoothStep(0.5f, accel, (Time.time - accelerationStartTime) / accelSmoothTime);
                                                                                                                //Debug.Log(sm + " - " + accelerationCurve.Evaluate((Time.time - accelerationStartTime) / accelSmoothTime));
-
+        
         
         if (rb.velocity.magnitude < maxSpeed && inputDirection.magnitude >= .15 && groundAngle <= maxGroundAngle)
         {
@@ -143,7 +155,11 @@ public class MovementController : MonoBehaviour
         if (onGround)
         {
             float deceleration = decelerationCurve.Evaluate((Time.time - deccelerationStartTime) / deccelerationSmoothTime);
-            rb.AddForce(rb.velocity.normalized * deceleration * decelerationMod, ForceMode.Force);
+            rb.velocity = rb.velocity - (rb.velocity * decelerationMod);
+            if (rb.velocity.sqrMagnitude < minSpeed)
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
     }
 
@@ -208,8 +224,10 @@ public class MovementController : MonoBehaviour
     //returns whether the player is on the ground or not.
     private bool isGrounded()
     {
-
-        return Physics.SphereCast(rb.transform.position, sphereCastWidth , Vector3.down, out hitInfo, distToGround + groundDistPad); 
+        int layerMask = LayerMask.GetMask("Ground");
+        return Physics.SphereCast(rb.transform.position, sphereCastWidth, Vector3.down, out hitInfo, distToGround + groundDistPad, layerMask);
+        
+                   
     }
 
     private void calcForward (){

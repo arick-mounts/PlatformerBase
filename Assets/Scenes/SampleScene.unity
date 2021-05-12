@@ -144,6 +144,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7569799927033852043, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -278,7 +282,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234020998}
-  m_LocalRotation: {x: 0.1327783, y: -0.0010721922, z: 0.00014363573, w: 0.9911452}
+  m_LocalRotation: {x: 0.13277818, y: -0.0017061529, z: 0.00022856401, w: 0.9911443}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -628,6 +632,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7569799927033852043, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -797,7 +805,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648995748}
-  m_LocalRotation: {x: 0.16317728, y: -0.0016008652, z: 0.000264774, w: 0.98659545}
+  m_LocalRotation: {x: 0.16317695, y: -0.0025474313, z: 0.00042133068, w: 0.9865935}
   m_LocalPosition: {x: 0, y: 4, z: -11.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1137,14 +1145,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accel: 6
-  accelSmoothTime: 2
+  accelSmoothTime: 1.5
   maxSpeed: 10
   airMoveMod: 0.85
+  minSpeed: 0.1
   jumpSpeed: 110
   jumpSmoothTime: 1
   doubleJumpMod: 1.4
-  turnSmoothTime: 0.1
-  decelerationMod: 8
+  turnSmoothTime: 0.22
+  decelerationMod: 0.02
   deccelerationSmoothTime: 4
   maxGroundAngle: 120
   groundDistPad: -0.2
@@ -1161,8 +1170,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.06682365
-      value: 0.067506105
+      time: 0.03904502
+      value: 0.07928589
       inSlope: 2.2458851
       outSlope: 2.2458851
       tangentMode: 0
@@ -1170,8 +1179,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.09381264
     - serializedVersion: 3
-      time: 0.27939463
-      value: 0.8096028
+      time: 0.22939157
+      value: 0.83318526
       inSlope: 0.9791945
       outSlope: 0.9791945
       tangentMode: 0
@@ -1181,7 +1190,7 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.26421842
+      inSlope: 0.21647148
       outSlope: -0.026209882
       tangentMode: 69
       weightedMode: 0
@@ -1194,8 +1203,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: -1
+      time: 0.0027770996
+      value: 0.000030517578
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1203,22 +1212,22 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.67776334
-      value: -0.6566923
-      inSlope: 1.4199009
-      outSlope: 1.4199009
+      time: 0.2013129
+      value: -0.41298926
+      inSlope: -1.1798586
+      outSlope: -1.1798586
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.07815327
     - serializedVersion: 3
       time: 1
-      value: -0.5
-      inSlope: 0.22369446
-      outSlope: 0.22369446
+      value: -1
+      inSlope: -0.008395161
+      outSlope: -0.008395161
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.19276494
+      inWeight: 0.09777529
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1237,8 +1246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 1130211861}
-  playerMovement: {fileID: 817712890}
-  playerRB: {fileID: 817712889}
+  ball: {fileID: 1403316870}
 --- !u!4 &914875691 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3379963584539283559, guid: 97dc89b4e0b64bb4cb5ce1d3e448ca17, type: 3}
@@ -1300,6 +1308,10 @@ PrefabInstance:
     - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_Name
       value: Cube (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7569799927033852043, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_RootOrder
@@ -1495,8 +1507,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -70934336788029875, guid: 3e398151f40fc0d42baca4970abc02da, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -70934336788029875, guid: 3e398151f40fc0d42baca4970abc02da, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -70934336788029875, guid: 3e398151f40fc0d42baca4970abc02da, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -70934336788029875, guid: 3e398151f40fc0d42baca4970abc02da, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1507,7 +1527,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -70934336788029875, guid: 3e398151f40fc0d42baca4970abc02da, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -70934336788029875, guid: 3e398151f40fc0d42baca4970abc02da, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -70934336788029875, guid: 3e398151f40fc0d42baca4970abc02da, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3e398151f40fc0d42baca4970abc02da, type: 3}
@@ -1549,6 +1577,10 @@ PrefabInstance:
     - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_Name
       value: Cube (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7569799927033852043, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_RootOrder
@@ -1612,6 +1644,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7569799927033852043, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
   m_PrefabInstance: {fileID: 57645265}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1403316870 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5718040866267344408, guid: 3e398151f40fc0d42baca4970abc02da, type: 3}
+  m_PrefabInstance: {fileID: 1098526630}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1466640522 stripped
 Transform:
@@ -1836,6 +1873,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7569799927033852043, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1953,7 +1994,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781478777}
-  m_LocalRotation: {x: 0.16317725, y: -0.0016008652, z: 0.00026477393, w: 0.98659545}
+  m_LocalRotation: {x: 0.16317694, y: -0.0025474308, z: 0.00042133048, w: 0.9865935}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1971,6 +2012,10 @@ PrefabInstance:
     - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_Name
       value: Cube (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7569799927033852043, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_RootOrder
@@ -2222,6 +2267,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7569799927033852043, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -2292,7 +2341,7 @@ GameObject:
   - component: {fileID: 2081695459}
   - component: {fileID: 2081695458}
   - component: {fileID: 2081695457}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2385,6 +2434,10 @@ PrefabInstance:
     - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_Name
       value: Cube (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7569799927033852043, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_RootOrder
@@ -2568,6 +2621,10 @@ PrefabInstance:
     - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_Name
       value: Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 909387949684363896, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7569799927033852043, guid: e5d17a05e23779b4fb6548bd8182f901, type: 3}
       propertyPath: m_RootOrder
