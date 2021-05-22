@@ -21,14 +21,13 @@ public class MovementController : MonoBehaviour
 
     public float turnSmoothTime = 0.1f;
     public float decelerationMod = .6f;
-    public float deccelerationSmoothTime = 4;
 
     public float maxGroundAngle = 120;
     public float groundDistPad = -0.2f;
 
+    public float airDrag = .25f;
 
     public AnimationCurve accelerationCurve;
-    public AnimationCurve decelerationCurve;
     public Transform cam;
 
 
@@ -38,12 +37,14 @@ public class MovementController : MonoBehaviour
     private bool onGround = true;
     private float distToGround;
     private float accelerationStartTime = 0.0f;
-    private float deccelerationStartTime = 0.0f;
     private float jumpStartTime = 0.0f;
     private float jumpAcceleration = 0.0f;
     private float airbourne = 1.0f;
-    private float groundAngle;  
+    public float groundAngle;  
+    public float angleMod = 1;
     private float sphereCastWidth;
+
+    private bool isBraking = false;
 
 
     private float angle = 0.0f;
@@ -76,6 +77,10 @@ public class MovementController : MonoBehaviour
         controls.Movement.Jump.canceled += ctx => { if (ctx.interaction is HoldInteraction) { getInputJump(doubleJumpMod); } };
 
 
+        controls.Movement.Brakes.performed += ctx => { getInputBrake(true);  };
+        controls.Movement.Brakes.canceled += ctx => { getInputBrake(false);  };
+
+
         controls.Movement.LSMove.performed += ctx => getInputDirection( ctx.ReadValue<Vector2>());
         controls.Movement.LSMove.canceled += ctx => getInputDirection(Vector2.zero);
 
@@ -106,10 +111,12 @@ public class MovementController : MonoBehaviour
         calcGroundAngle();
 
         toggleGravity();
+        toggleDrag();
             
         //handles jumping
         jump();
 
+        decelerate();
 
 
                
@@ -141,25 +148,39 @@ public class MovementController : MonoBehaviour
 
         float sm = accel * accelerationCurve.Evaluate((Time.time - accelerationStartTime) / accelSmoothTime ); // Mathf.SmoothStep(0.5f, accel, (Time.time - accelerationStartTime) / accelSmoothTime);
                                                                                                                //Debug.Log(sm + " - " + accelerationCurve.Evaluate((Time.time - accelerationStartTime) / accelSmoothTime));
-        
-        
+        angleMod = (groundAngle / -90) + 2;
+
+
         if (rb.velocity.magnitude < maxSpeed && inputDirection.magnitude >= .15 && groundAngle <= maxGroundAngle)
         {
 
-            rb.AddForce(sm * airbourne * (forwardDir.normalized * Time.deltaTime), ForceMode.Impulse);
+            rb.AddForce(sm * airbourne * (forwardDir.normalized * Time.deltaTime) * (angleMod), ForceMode.Impulse);
+        }
+        else if (rb.velocity.sqrMagnitude < minSpeed)
+        {
+            rb.velocity = Vector3.zero;
         }
     }
 
     void decelerate()
     {
-        if (onGround)
+        
+
+        if (onGround && isBraking)
         {
-            float deceleration = decelerationCurve.Evaluate((Time.time - deccelerationStartTime) / deccelerationSmoothTime);
             rb.velocity = rb.velocity - (rb.velocity * decelerationMod);
-            if (rb.velocity.sqrMagnitude < minSpeed)
-            {
-                rb.velocity = Vector3.zero;
-            }
+            
+        }
+    }
+
+    void toggleDrag()
+    {
+        if (onGround) {
+            rb.drag = .85f;
+        }
+        else
+        {
+            rb.drag = airDrag;
         }
     }
 
@@ -183,7 +204,7 @@ public class MovementController : MonoBehaviour
         if(Vector2.zero == vec)
         {
             accelerationStartTime = 0;
-            deccelerationStartTime = Time.time;
+            
         }
         else if(accelerationStartTime == 0)
             accelerationStartTime = Time.time;
@@ -198,6 +219,11 @@ public class MovementController : MonoBehaviour
             jumpAcceleration = jumpSpeed * j;
             jumpStartTime = Time.time;
         }
+    }
+
+    void getInputBrake(bool brake)
+    {
+        isBraking = brake;
     }
 
     void calcAirbourne()

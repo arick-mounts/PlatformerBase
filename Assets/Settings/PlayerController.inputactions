@@ -30,9 +30,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "New action",
+                    "name": "Brakes",
                     "type": "Button",
-                    "id": "2bd58a81-a044-4013-b2fd-ea2b7b997b42",
+                    "id": "cf638a3e-7e52-4c41-b545-e0008f645974",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -140,12 +140,12 @@
                 },
                 {
                     "name": "",
-                    "id": "fe0c7f1e-8cb9-4cc2-abb1-22f7e4c4a2fb",
-                    "path": "",
+                    "id": "4160bd9d-ca99-48a9-928a-df34d833c667",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Brakes",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
